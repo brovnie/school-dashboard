@@ -1,4 +1,4 @@
-# Lama Dev School Management Dashboard
+# Clone Lama Devs School Management Dashboard
 
 ## Getting Started
 
