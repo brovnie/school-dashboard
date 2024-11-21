@@ -1,3 +1,4 @@
+import AttendanceChart from '@/components/AttendanceChart'
 import CountChart from '@/components/CountChart'
 import UserCard from '@/components/UserCard'
 import React from 'react'
@@ -17,10 +18,12 @@ function AdminPage() {
         <div className="flex gap-4 flex-col lg:flex-row">
            {/* Radial Bar Chart*/}
            <div className="w-full lg:w-1/3 h-[450px]">
-           <CountChart/>
+            <CountChart/>
            </div>
            {/* Bar Chart*/}
-           <div className="w-full lg:w-2/3 h-[450px]"></div>
+           <div className="w-full lg:w-2/3 h-[450px]">
+            <AttendanceChart/>
+           </div>
         </div>
       </div>
       <div className="w-full lg:w-1/3">
