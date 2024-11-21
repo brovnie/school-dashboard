@@ -1,4 +1,5 @@
 import Menu from "@/components/Menu";
+import Navbar from "@/components/Navbar";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import Image from "next/image";
@@ -25,7 +26,10 @@ export default function DashboardLayout({
   </Link>
   <Menu/>
   </div>
-  <div className="w-5/6 md:w-[92%] lg:w-[84%] xl:w-[86%]">r</div>
+  <div className="w-5/6 md:w-[92%] lg:w-[84%] xl:w-[86%] bg-[#F7F8FA] overflow-scroll">
+  <Navbar/>
+  {children}
+  </div>
   </div>
   );
 }
