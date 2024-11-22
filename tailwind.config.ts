@@ -19,7 +19,7 @@ const config: Config = {
         "customPurple": "#CFCEFF",
         "purpleLight": "#F1F0FF",
         "customYellow": "#FAE27C",
-        "yellowLight": "FEFCE8" 
+        "yellowLight": "#FEFCE8",
       }
     },
   },
