@@ -11,7 +11,6 @@ const StudentPage = () => {
           <h2 className='text-xl font-semibold'>Schedule (4A)</h2>
           <BigCalendar/>
         </div>
-      
       </div>
       <div className="w-full xl:w-1/3 flex flex-col gap-8">
       <EventCalendar/>
