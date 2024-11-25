@@ -55,8 +55,8 @@ function ClassListPage() {
           <Link href={`/list/classes/${item.id}`}>
             <button className="w-7 h-7 rounded-full flex items-center justify-center bg-sky">
               <Image
-                src="/view.png"
-                alt={`View class ${item.name} `}
+                src="/edit.png"
+                alt={`Edit class ${item.name} `}
                 width={16}
                 height={16}
               />
