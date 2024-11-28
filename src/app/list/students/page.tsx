@@ -1,3 +1,4 @@
+import FormModal from "@/components/FormModal";
 import Pagination from "@/components/Pagination";
 import Table from "@/components/Table";
 import TableSearch from "@/components/TableSearch";
@@ -85,14 +86,7 @@ function StudentListPage() {
             </button>
           </Link>
           {role === "admin" && (
-            <button className="w-7 h-7 rounded-full flex items-center justify-center bg-customPurple">
-              <Image
-                src="/delete.png"
-                alt={`Delete student ${item.name}`}
-                width={16}
-                height={16}
-              />
-            </button>
+            <FormModal table="student" type="delete" id={item.id} />
           )}
         </div>
       </td>
@@ -112,11 +106,7 @@ function StudentListPage() {
             <button className="w-8 h-8 flex items-center justify-center rounded-full bg-customYellow">
               <Image src="/sort.png" alt="" width={14} height={14} />
             </button>
-            {role === "admin" && (
-              <button className="w-8 h-8 flex items-center justify-center rounded-full bg-customYellow">
-                <Image src="/plus.png" alt="" width={14} height={14} />
-              </button>
-            )}
+            {role === "admin" && <FormModal table="student" type="create" />}
           </div>
         </div>
       </div>
