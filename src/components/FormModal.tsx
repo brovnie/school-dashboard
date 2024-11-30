@@ -1,6 +1,14 @@
 "use client";
 import Image from "next/image";
 import React, { useState } from "react";
+import TeacherForm from "./forms/TeacherForm";
+
+const forms: {
+  [key: string]: (type: "create" | "update", data?: any) => JSX.Element;
+} = {
+  teacher: (type, data) => <TeacherForm type={type} data={data} />,
+  student: (type, data) => <TeacherForm type={type} data={data} />,
+};
 
 type Form = {
   table:
@@ -42,8 +50,10 @@ function FormModal({ table, type, data, id }: Form) {
           Delete
         </button>
       </form>
+    ) : type === "create" || type === "update" ? (
+      forms[table](type, data)
     ) : (
-      <p>Nope</p>
+      "Form not found"
     );
   };
   return (
