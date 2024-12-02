@@ -1,13 +1,20 @@
 "use client";
 import Image from "next/image";
 import React, { useState } from "react";
-import TeacherForm from "./forms/TeacherForm";
+import dynamic from "next/dynamic";
+
+const TeacherForm = dynamic(() => import("./forms/TeacherForm"), {
+  loading: () => <p>Loading...</p>,
+});
+const StudentForm = dynamic(() => import("./forms/StudentForm"), {
+  loading: () => <p>Loading...</p>,
+});
 
 const forms: {
   [key: string]: (type: "create" | "update", data?: any) => JSX.Element;
 } = {
   teacher: (type, data) => <TeacherForm type={type} data={data} />,
-  student: (type, data) => <TeacherForm type={type} data={data} />,
+  student: (type, data) => <StudentForm type={type} data={data} />,
 };
 
 type Form = {
