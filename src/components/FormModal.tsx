@@ -33,7 +33,7 @@ type Form = {
     | "announcement";
   type: "create" | "update" | "delete";
   data?: any;
-  id?: number;
+  id?: number | string;
 };
 
 function FormModal({ table, type, data, id }: Form) {
