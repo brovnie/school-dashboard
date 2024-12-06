@@ -99,20 +99,16 @@ async function StudentListPage({
       if (value !== undefined) {
         switch (key) {
           case "teacherId":
-            {
-              query.class = {
-                lessons: {
-                  some: {
-                    teacherId: value, // filter lessons by classId
-                  },
+            query.class = {
+              lessons: {
+                some: {
+                  teacherId: value, // filter lessons by classId
                 },
-              };
-            }
+              },
+            };
             break;
           case "search":
-            {
-              query.name = { contains: value, mode: "insensitive" };
-            }
+            query.name = { contains: value, mode: "insensitive" };
             break;
           default:
             break;

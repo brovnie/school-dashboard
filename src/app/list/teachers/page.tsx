@@ -110,18 +110,15 @@ async function TeacherListPage({
       if (value !== undefined) {
         switch (key) {
           case "classId":
-            {
-              query.lessons = {
-                some: {
-                  classId: parseInt(value),
-                },
-              };
-            }
+            query.lessons = {
+              some: {
+                classId: parseInt(value),
+              },
+            };
             break;
+
           case "search":
-            {
-              query.name = { contains: value, mode: "insensitive" };
-            }
+            query.name = { contains: value, mode: "insensitive" };
             break;
           default:
             break;

@@ -76,14 +76,10 @@ async function ClassListPage({
       if (value !== undefined) {
         switch (key) {
           case "supervisorId":
-            {
-              query.supervisorId = value;
-            }
+            query.supervisorId = value;
             break;
           case "search":
-            {
-              query.name = { contains: value, mode: "insensitive" };
-            }
+            query.name = { contains: value, mode: "insensitive" };
             break;
           default:
             break;

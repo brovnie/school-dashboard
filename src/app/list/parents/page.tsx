@@ -82,9 +82,7 @@ async function ParentListPage({
       if (value !== undefined) {
         switch (key) {
           case "search":
-            {
-              query.name = { contains: value, mode: "insensitive" };
-            }
+            query.name = { contains: value, mode: "insensitive" };
             break;
           default:
             break;

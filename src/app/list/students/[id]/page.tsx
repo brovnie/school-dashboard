@@ -126,7 +126,10 @@ function SingleStudentPage() {
         <div className="bg-white p-4 rounded-md">
           <h2 className="text-xl font-semibold">Shortcuts</h2>
           <div className="mt-4 flex gap-4 flex-wrap text-xs text-gray-500">
-            <Link href="/" className="p-3 rounded-md bg-skyLight">
+            <Link
+              href={`/list/lessons?classId=${2}`}
+              className="p-3 rounded-md bg-skyLight"
+            >
               Student&apos;s Lessons
             </Link>
             <Link
