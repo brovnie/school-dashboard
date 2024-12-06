@@ -123,6 +123,8 @@ async function TeacherListPage({
               query.name = { contains: value, mode: "insensitive" };
             }
             break;
+          default:
+            break;
         }
       }
     }

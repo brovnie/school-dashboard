@@ -114,6 +114,8 @@ async function StudentListPage({
               query.name = { contains: value, mode: "insensitive" };
             }
             break;
+          default:
+            break;
         }
       }
     }
