@@ -109,9 +109,11 @@ async function StudentListPage({
               };
             }
             break;
-          case "search": {
-            query.name = { contains: value, mode: "insensitive" };
-          }
+          case "search":
+            {
+              query.name = { contains: value, mode: "insensitive" };
+            }
+            break;
         }
       }
     }
