@@ -89,11 +89,19 @@ async function AssigmentListPage({
             query.lesson = { teacherId: value };
             break;
           case "search":
-            query.lesson = {
-              subject: {
-                name: { contains: value, mode: "insensitive" },
+            query.OR = [
+              {
+                lesson: {
+                  subject: {
+                    name: { contains: value, mode: "insensitive" },
+                  },
+                  teacher: {
+                    name: { contains: value, mode: "insensitive" },
+                    surname: { contains: value, mode: "insensitive" },
+                  },
+                },
               },
-            };
+            ];
             break;
           default:
             break;
