@@ -13,6 +13,7 @@ const HomePage = () => {
     const role = user?.publicMetadata.role;
     role && router.push(`/${role}`);
   }, [user, router]);
+
   return (
     <div className="h-screen flex items-center justify-center bg-skyLight">
       <SignIn.Root>
