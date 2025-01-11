@@ -1,8 +1,4 @@
-import {
-  clerkMiddleware,
-  ClerkMiddlewareAuthObject,
-  createRouteMatcher,
-} from "@clerk/nextjs/server";
+import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
 import { routeAccessMap } from "./lib/settings";
 import { NextResponse } from "next/server";
 
@@ -22,7 +18,6 @@ export default clerkMiddleware(async (auth, req) => {
       return NextResponse.redirect(new URL(`/${role}`, req.url));
     }
   }
-  //if (isProtectedRoute(req)) await auth.protect();
 });
 
 export const config = {

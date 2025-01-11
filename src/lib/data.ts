@@ -1023,8 +1023,8 @@ export const calendarEvents = [
   {
     title: "Physics",
     allDay: false,
-    start: new Date(year, month, day + 1, 11, 0),
-    end: new Date(year, month, day + 1, 11, 45),
+    start: new Date(year, month, day + 2, 11, 0),
+    end: new Date(year, month, day + 2, 11, 45),
   },
 
   {
@@ -1049,8 +1049,8 @@ export const calendarEvents = [
   {
     title: "Physics",
     allDay: false,
-    start: new Date(year, month, day - 2, 11, 0),
-    end: new Date(year, month, day - 2, 11, 45),
+    start: new Date(year, month, day - 1, 11, 0),
+    end: new Date(year, month, day - 1, 11, 45),
   },
   {
     title: "Chemistry",
