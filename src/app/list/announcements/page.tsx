@@ -4,16 +4,11 @@ import Table from "@/components/Table";
 import TableSearch from "@/components/TableSearch";
 import prisma from "@/lib/prisma";
 import { ITEM_PER_PAGE } from "@/lib/settings";
-import { auth } from "@clerk/nextjs/server";
+import { getRole } from "@/lib/utils";
 import { Announcement, Class, Prisma } from "@prisma/client";
 import Image from "next/image";
 import React from "react";
 
-const getRole = async () => {
-  const { sessionClaims } = await auth();
-  const role = (sessionClaims?.metadata as { role?: string })?.role;
-  return role;
-};
 type AnnounecementList = Announcement & { class: Class };
 
 const fetchColumns = async () => {
