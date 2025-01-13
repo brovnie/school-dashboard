@@ -12,7 +12,7 @@ import React from "react";
 
 type ClassList = Class & { supervisor: Teacher };
 
-const fetchColums = async () => {
+const fetchColumns = async () => {
   const role = await getRole();
   return [
     {
@@ -82,7 +82,7 @@ async function ClassListPage({
 
   const query: Prisma.ClassWhereInput = {};
 
-  const columns = await fetchColums();
+  const columns = await fetchColumns();
   const role = await getRole();
 
   if (queryParams) {
