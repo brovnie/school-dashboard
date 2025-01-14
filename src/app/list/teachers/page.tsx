@@ -2,9 +2,9 @@ import FormModal from "@/components/FormModal";
 import Pagination from "@/components/Pagination";
 import Table from "@/components/Table";
 import TableSearch from "@/components/TableSearch";
-import { role, teachersData } from "@/lib/data";
 import prisma from "@/lib/prisma";
 import { ITEM_PER_PAGE } from "@/lib/settings";
+import { getRole } from "@/lib/utils";
 import { Class, Prisma, Subject, Teacher } from "@prisma/client";
 import Image from "next/image";
 import Link from "next/link";
@@ -48,52 +48,55 @@ const columns = [
   },
 ];
 
-const renderRow = (item: TeacherList) => (
-  <tr
-    key={item.id}
-    className="border-b border-gray-200 even:bg-slate-50 text-sm hover:bg-purpleLight"
-  >
-    <td className="flex items-center gap-4 p-4">
-      <Image
-        src={item.img || "/noAvatar.png"}
-        alt=""
-        width={40}
-        height={40}
-        className="md-hidden xl:block w-10 h-10 rounded-full object-cover"
-      />
-      <div className="flex flex-col">
-        <h3 className="font-semibold">{item.name}</h3>
-        <p className="text-sm text-gray-500">{item?.email}</p>
-      </div>
-    </td>
-    <td className="hidden md:table-cell">{item.username}</td>
-    <td className="hidden md:table-cell">
-      {item.subjects.map((subject) => subject.name).join(",")}
-    </td>
-    <td className="hidden md:table-cell">
-      {item.classes.map((classItem) => classItem.name).join("")}
-    </td>
-    <td className="hidden md:table-cell">{item.phone}</td>
-    <td className="hidden md:table-cell">{item.address}</td>
-    <td>
-      <div className="flex items-center gap-2">
-        <Link href={`/list/teachers/${item.id}`}>
-          <button className="w-7 h-7 rounded-full flex items-center justify-center bg-sky">
-            <Image
-              src="/view.png"
-              alt={`View teacher ${item.name} `}
-              width={16}
-              height={16}
-            />
-          </button>
-        </Link>
-        {role === "admin" && (
-          <FormModal table="teacher" type="delete" id={item.id} />
-        )}
-      </div>
-    </td>
-  </tr>
-);
+const renderRow = async (item: TeacherList) => {
+  const role = await getRole();
+  return (
+    <tr
+      key={item.id}
+      className="border-b border-gray-200 even:bg-slate-50 text-sm hover:bg-purpleLight"
+    >
+      <td className="flex items-center gap-4 p-4">
+        <Image
+          src={item.img || "/noAvatar.png"}
+          alt=""
+          width={40}
+          height={40}
+          className="md-hidden xl:block w-10 h-10 rounded-full object-cover"
+        />
+        <div className="flex flex-col">
+          <h3 className="font-semibold">{item.name}</h3>
+          <p className="text-sm text-gray-500">{item?.email}</p>
+        </div>
+      </td>
+      <td className="hidden md:table-cell">{item.username}</td>
+      <td className="hidden md:table-cell">
+        {item.subjects.map((subject) => subject.name).join(",")}
+      </td>
+      <td className="hidden md:table-cell">
+        {item.classes.map((classItem) => classItem.name).join("")}
+      </td>
+      <td className="hidden md:table-cell">{item.phone}</td>
+      <td className="hidden md:table-cell">{item.address}</td>
+      <td>
+        <div className="flex items-center gap-2">
+          <Link href={`/list/teachers/${item.id}`}>
+            <button className="w-7 h-7 rounded-full flex items-center justify-center bg-sky">
+              <Image
+                src="/view.png"
+                alt={`View teacher ${item.name} `}
+                width={16}
+                height={16}
+              />
+            </button>
+          </Link>
+          {role === "admin" && (
+            <FormModal table="teacher" type="delete" id={item.id} />
+          )}
+        </div>
+      </td>
+    </tr>
+  );
+};
 
 async function TeacherListPage({
   searchParams,
@@ -126,6 +129,9 @@ async function TeacherListPage({
       }
     }
   }
+
+  const role = await getRole();
+
   const [data, count] = await prisma.$transaction([
     prisma.teacher.findMany({
       where: query,
