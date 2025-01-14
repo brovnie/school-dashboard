@@ -139,6 +139,9 @@ async function ExamListPage({
           },
         },
       };
+      break;
+    default:
+      break;
   }
 
   const [data, count] = await prisma.$transaction([
