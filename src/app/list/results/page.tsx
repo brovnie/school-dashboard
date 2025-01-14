@@ -5,6 +5,7 @@ import TableSearch from "@/components/TableSearch";
 import { role } from "@/lib/data";
 import prisma from "@/lib/prisma";
 import { ITEM_PER_PAGE } from "@/lib/settings";
+import { getRole, getUserId } from "@/lib/utils";
 import { Prisma, Result } from "@prisma/client";
 import Image from "next/image";
 import React from "react";
@@ -21,68 +22,78 @@ type ResultList = {
   startTime: Date;
 };
 
-const columns = [
-  {
-    header: "Title",
-    accessor: "title",
-  },
-  {
-    header: "Student",
-    accessor: "student",
-  },
-  {
-    header: "Score",
-    accessor: "score",
-    className: "hidden md:table-cell",
-  },
-  {
-    header: "Teacher",
-    accessor: "teacher",
-    className: "hidden md:table-cell",
-  },
-  {
-    header: "Class",
-    accessor: "class",
-    className: "hidden md:table-cell",
-  },
-  {
-    header: "Date",
-    accessor: "date",
-    className: "hidden md:table-cell",
-  },
-  {
-    header: "Actions",
-    accessor: "actions",
-  },
-];
+const fetchColumns = async () => {
+  const role = await getRole();
+  return [
+    {
+      header: "Title",
+      accessor: "title",
+    },
+    {
+      header: "Student",
+      accessor: "student",
+    },
+    {
+      header: "Score",
+      accessor: "score",
+      className: "hidden md:table-cell",
+    },
+    {
+      header: "Teacher",
+      accessor: "teacher",
+      className: "hidden md:table-cell",
+    },
+    {
+      header: "Class",
+      accessor: "class",
+      className: "hidden md:table-cell",
+    },
+    {
+      header: "Date",
+      accessor: "date",
+      className: "hidden md:table-cell",
+    },
+    ...(role === "admin" || role === "teacher"
+      ? [
+          {
+            header: "Actions",
+            accessor: "actions",
+          },
+        ]
+      : []),
+  ];
+};
 
-const renderRow = (item: ResultList) => (
-  <tr
-    key={item.id}
-    className="border-b border-gray-200 even:bg-slate-50 text-sm hover:bg-purpleLight"
-  >
-    <td className="flex items-center gap-4 p-4">{item.title}</td>
-    <td>{item.studentName + " " + item.studentSurname}</td>
-    <td className="hidden md:table-cell">{item.score}</td>
-    <td className="hidden md:table-cell">
-      {item.teacherName + " " + item.teacherSurname}
-    </td>
-    <td className="hidden md:table-cell">{item.className}</td>
-    <td className="hidden md:table-cell">
-      {new Intl.DateTimeFormat("en-US").format(item.startTime)}
-    </td>
-    <td>
-      <div className="flex items-center gap-2">
-        {role === "admin" && (
-          <>
-            <FormModal table="result" type="update" data={item} />
-            <FormModal table="result" type="delete" id={item.id} />
-          </>
-        )}
-      </div>
-    </td>
-  </tr>
-);
+const renderRow = async (item: ResultList) => {
+  const role = await getRole();
+  return (
+    <tr
+      key={item.id}
+      className="border-b border-gray-200 even:bg-slate-50 text-sm hover:bg-purpleLight"
+    >
+      <td className="flex items-center gap-4 p-4">{item.title}</td>
+      <td>{item.studentName + " " + item.studentSurname}</td>
+      <td className="hidden md:table-cell">{item.score}</td>
+      <td className="hidden md:table-cell">
+        {item.teacherName + " " + item.teacherSurname}
+      </td>
+      <td className="hidden md:table-cell">{item.className}</td>
+      <td className="hidden md:table-cell">
+        {new Intl.DateTimeFormat("en-US").format(item.startTime)}
+      </td>
+      <td>
+        <div className="flex items-center gap-2">
+          {(role === "admin" || role === "teacher") && (
+            <>
+              <FormModal table="result" type="update" data={item} />
+              <FormModal table="result" type="delete" id={item.id} />
+            </>
+          )}
+        </div>
+      </td>
+    </tr>
+  );
+};
 
 async function ResultListPage({
   searchParams,
@@ -113,6 +124,33 @@ async function ResultListPage({
       }
     }
   }
+
+  const role = await getRole();
+  const columns = await fetchColumns();
+
+  //role conditions
+  const currentUserId = await getUserId();
+  switch (role) {
+    case "admin":
+      break;
+    case "teacher":
+      query.OR = [
+        { exam: { lesson: { teacherId: currentUserId! } } },
+        { assignment: { lesson: { teacherId: currentUserId! } } },
+      ];
+      break;
+    case "student":
+      query.studentId = currentUserId!;
+      break;
+    case "parent":
+      query.student = {
+        parentId: currentUserId!,
+      };
+      break;
+    default:
+      break;
+  }
+
   const [dataRes, count] = await prisma.$transaction([
     prisma.result.findMany({
       where: query,
@@ -175,7 +213,9 @@ async function ResultListPage({
             <button className="w-8 h-8 flex items-center justify-center rounded-full bg-customYellow">
               <Image src="/sort.png" alt="" width={14} height={14} />
             </button>
-            {role === "admin" && <FormModal table="result" type="create" />}
+            {(role === "admin" || role === "teacher") && (
+              <FormModal table="result" type="create" />
+            )}
           </div>
         </div>
       </div>
