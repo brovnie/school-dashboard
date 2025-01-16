@@ -61,14 +61,14 @@ const renderRow = async (item: EventList) => {
         {new Intl.DateTimeFormat("en-US").format(item.startTime)}
       </td>
       <td className="hidden md:table-cell">
-        {item.startTime.toLocaleTimeString("en-US", {
+        {item.startTime.toLocaleTimeString("nl-BE", {
           hour: "2-digit",
           minute: "2-digit",
           hour12: false,
         })}
       </td>
       <td className="hidden md:table-cell">
-        {item.endTime.toLocaleTimeString("en-US", {
+        {item.endTime.toLocaleTimeString("nl-BE", {
           hour: "2-digit",
           minute: "2-digit",
           hour12: false,
