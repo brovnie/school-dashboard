@@ -1,6 +1,5 @@
 import prisma from "@/lib/prisma";
 import { getRole, getUserId } from "@/lib/utils";
-import { auth } from "@clerk/nextjs/server";
 import React from "react";
 
 const Announcements = async () => {
