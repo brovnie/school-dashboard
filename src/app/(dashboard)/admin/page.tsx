@@ -1,14 +1,18 @@
 import Announcements from "@/components/Announcements";
 import AttendanceChartContainer from "@/components/AttendanceChartContainer";
 import CountChartContainer from "@/components/CountChartContainer";
-import EventCalendar from "@/components/EventCalendar";
+import { EvantCalendarContainer } from "@/components/EvantCalendarContainer";
 import FinanceChart from "@/components/FinanceChart";
 import UserCard from "@/components/UserCard";
 import React from "react";
 
-function AdminPage() {
+function AdminPage({
+  searchParams,
+}: {
+  searchParams: { [keys: string]: string | undefined };
+}) {
   return (
-    <div className="flex p4 flex-col md:flex-row">
+    <div className="flex p4 flex-col md:flex-row gap-4">
       <div className="w-full lg:w-2/3 flex flex-col gap-8">
         {/* User Cards */}
         <div className="flex gap-4 justify-between flex-wrap">
@@ -33,7 +37,7 @@ function AdminPage() {
         </div>
       </div>
       <div className="w-full lg:w-1/3 flex flex-col gap-8">
-        <EventCalendar />
+        <EvantCalendarContainer searchParams={searchParams} />
         <Announcements />
       </div>
     </div>
