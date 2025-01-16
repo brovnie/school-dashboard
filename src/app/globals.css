@@ -53,9 +53,10 @@
 
 .rbc-time-gutter.rbc-time-column .rbc-timeslot-group {
   padding: 0 20px !important;
+}
+.rbc-time-column .rbc-timeslot-group {
   min-height: 100px;
 }
-
 .rbc-timeslot-group {
   background-color: #f7fdff !important;
 }
