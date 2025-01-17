@@ -11,7 +11,6 @@ const EventList = async ({ dateParam }: { dateParam: string | undefined }) => {
       },
     },
   });
-  console.log("data is", data);
   if (data.length === 0) {
     return (
       <p className="text-sm text-gray-400 ">No events found for this date.</p>
