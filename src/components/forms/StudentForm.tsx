@@ -6,6 +6,7 @@ import { z } from "zod";
 import InputField from "./InputField";
 import Image from "next/image";
 import { fileURLToPath } from "url";
+import { FormTypes } from "./types";
 
 const schema = z.object({
   username: z
@@ -26,10 +27,6 @@ const schema = z.object({
   img: z.instanceof(File, { message: "Image is required" }),
 });
 type Inputs = z.infer<typeof schema>;
-type FormTypes = {
-  type: "create" | "update";
-  data?: any;
-};
 
 const StudentForm = ({ type, data }: FormTypes) => {
   const {

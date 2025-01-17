@@ -3,16 +3,22 @@ import Image from "next/image";
 import React, { useState } from "react";
 import dynamic from "next/dynamic";
 
+const Loading = <p>Loading</p>;
+
 const TeacherForm = dynamic(() => import("./forms/TeacherForm"), {
-  loading: () => <p>Loading...</p>,
+  loading: () => Loading,
 });
 const StudentForm = dynamic(() => import("./forms/StudentForm"), {
-  loading: () => <p>Loading...</p>,
+  loading: () => Loading,
+});
+const SubjectForm = dynamic(() => import("./forms/SubjectForm"), {
+  loading: () => Loading,
 });
 
 const forms: {
   [key: string]: (type: "create" | "update", data?: any) => JSX.Element;
 } = {
+  subject: (type, data) => <SubjectForm type={type} data={data} />,
   teacher: (type, data) => <TeacherForm type={type} data={data} />,
   student: (type, data) => <StudentForm type={type} data={data} />,
 };
