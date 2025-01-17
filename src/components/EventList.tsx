@@ -11,7 +11,12 @@ const EventList = async ({ dateParam }: { dateParam: string | undefined }) => {
       },
     },
   });
-
+  console.log("data is", data);
+  if (data.length === 0) {
+    return (
+      <p className="text-sm text-gray-400 ">No events found for this date.</p>
+    );
+  }
   return data.map((event) => (
     <div
       className="p-5 rounded-md border-gray-100 border-2 border-t-4 odd:border-t-sky even:border-t-customPurple"
