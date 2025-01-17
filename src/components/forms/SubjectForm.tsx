@@ -10,7 +10,7 @@ import { useFormState } from "react-dom";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 
-const SubjectForm = ({ type, data }: FormTypes) => {
+const SubjectForm = ({ setOpen, type, data }: FormTypes) => {
   const {
     register,
     handleSubmit,
@@ -29,9 +29,11 @@ const SubjectForm = ({ type, data }: FormTypes) => {
   const router = useRouter();
 
   useEffect(() => {
-    state.success &&
+    if (state.success) {
       toast(`Subject has been ${type === "create" ? "created" : "updated"}`);
-    router.refresh();
+      setOpen(false);
+      router.refresh();
+    }
   }, [state]);
 
   return (
