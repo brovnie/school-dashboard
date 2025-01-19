@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import InputField from "./InputField";
 import { FormTypes } from "./types";
 import { subjectSchema, SubjectSchema } from "@/lib/formValidationSchema";
-import { createSubject } from "@/lib/actions";
+import { createSubject, updateSubject } from "@/lib/actions";
 import { useFormState } from "react-dom";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
@@ -16,8 +16,7 @@ const SubjectForm = ({ setOpen, type, data }: FormTypes) => {
     handleSubmit,
     formState: { errors },
   } = useForm<SubjectSchema>({ resolver: zodResolver(subjectSchema) });
-
-  const [state, formAction] = useFormState(createSubject, {
+  const [state, formAction] = useFormState(updateSubject, {
     success: false,
     error: false,
   });

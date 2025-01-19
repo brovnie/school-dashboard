@@ -1,7 +1,26 @@
 "use client";
 import Image from "next/image";
-import React, { Dispatch, useState } from "react";
+import React, { Dispatch, useEffect, useState } from "react";
 import dynamic from "next/dynamic";
+import { useFormState } from "react-dom";
+import { deleteSubject } from "@/lib/actions";
+import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
+
+const deleteActionMap = {
+  subject: deleteSubject,
+  class: deleteSubject,
+  teacher: deleteSubject,
+  student: deleteSubject,
+  exam: deleteSubject,
+  parent: deleteSubject,
+  lesson: deleteSubject,
+  assignment: deleteSubject,
+  result: deleteSubject,
+  attendance: deleteSubject,
+  event: deleteSubject,
+  announcement: deleteSubject,
+};
 
 const Loading = <p>Loading</p>;
 
@@ -53,6 +72,7 @@ type Form = {
 };
 
 function FormModal({ table, type, data, id }: Form) {
+  console.log(data);
   const size = type === "create" ? "w-8 h-8" : "w-7 h-7";
   const bgColor =
     type === "create"
@@ -63,8 +83,23 @@ function FormModal({ table, type, data, id }: Form) {
   const [open, setOpen] = useState(false);
 
   const SingleForm = () => {
+    const [state, formAction] = useFormState(deleteActionMap[table], {
+      success: false,
+      error: false,
+    });
+    const router = useRouter();
+
+    useEffect(() => {
+      if (state.success) {
+        toast(`Subject has been deleted`);
+        setOpen(false);
+        router.refresh();
+      }
+    }, [state]);
+
     return type == "delete" && id ? (
-      <form className="p-4 flex flex-col gap-4">
+      <form action={formAction} className="p-4 flex flex-col gap-4">
+        <input type="text | number" name="id" value={id} hidden />
         <span className="text-center font-medium">
           All the data will be lost? Are you sure you want to delete this
           {table}?

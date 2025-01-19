@@ -28,7 +28,7 @@ const schema = z.object({
 });
 type Inputs = z.infer<typeof schema>;
 
-const TeacherForm = ({ type, data }: FormTypes) => {
+const TeacherForm = ({ setOpen, type, data }: FormTypes) => {
   const {
     register,
     handleSubmit,
