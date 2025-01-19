@@ -1,3 +1,4 @@
+import FormContainter from "@/components/FormContainter";
 import FormModal from "@/components/FormModal";
 import Pagination from "@/components/Pagination";
 import Table from "@/components/Table";
@@ -38,8 +39,8 @@ const renderRow = (item: SubjectList) => (
     <td>
       <div className="flex items-center gap-2">
         <>
-          <FormModal table="subject" type="update" data={item} />
-          <FormModal table="subject" type="delete" id={item.id} />
+          <FormContainter table="subject" type="update" data={item} />
+          <FormContainter table="subject" type="delete" id={item.id} />
         </>
       </div>
     </td>
@@ -97,7 +98,7 @@ async function SubjectListPage({
             <button className="w-8 h-8 flex items-center justify-center rounded-full bg-customYellow">
               <Image src="/sort.png" alt="" width={14} height={14} />
             </button>
-            <FormModal table="subject" type="create" />
+            <FormContainter table="subject" type="create" />
           </div>
         </div>
       </div>

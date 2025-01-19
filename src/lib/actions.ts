@@ -14,11 +14,15 @@ export const createSubject = async (
     await prisma.subject.create({
       data: {
         name: data.name,
+        teachers: {
+          connect: data.teachers.map((teacherId) => ({ id: teacherId })),
+        },
       },
     });
+
     return { success: true, error: false };
-  } catch (error) {
-    console.log(error);
+  } catch (err) {
+    console.log(err);
     return { success: false, error: true };
   }
 };

@@ -6,6 +6,7 @@ import { useFormState } from "react-dom";
 import { deleteSubject } from "@/lib/actions";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
+import { FormContainerTabs } from "./types";
 
 const deleteActionMap = {
   subject: deleteSubject,
@@ -38,40 +39,43 @@ const forms: {
   [key: string]: (
     setOpen: Dispatch<React.SetStateAction<boolean>>,
     type: "create" | "update",
-    data?: any
+    data?: any,
+    relatedData?: any
   ) => JSX.Element;
 } = {
-  subject: (setOpen, type, data) => (
-    <SubjectForm setOpen={setOpen} type={type} data={data} />
+  subject: (setOpen, type, data, relatedData) => (
+    <SubjectForm
+      setOpen={setOpen}
+      type={type}
+      data={data}
+      relatedData={relatedData}
+    />
   ),
   teacher: (setOpen, type, data) => (
-    <TeacherForm setOpen={setOpen} type={type} data={data} />
+    <TeacherForm
+      setOpen={setOpen}
+      type={type}
+      data={data}
+      relatedData={relatedData}
+    />
   ),
   student: (setOpen, type, data) => (
-    <StudentForm setOpen={setOpen} type={type} data={data} />
+    <StudentForm
+      setOpen={setOpen}
+      type={type}
+      data={data}
+      relatedData={relatedData}
+    />
   ),
 };
 
-type Form = {
-  table:
-    | "teacher"
-    | "student"
-    | "parent"
-    | "subject"
-    | "class"
-    | "lesson"
-    | "exam"
-    | "assignment"
-    | "result"
-    | "attendance"
-    | "event"
-    | "announcement";
-  type: "create" | "update" | "delete";
-  data?: any;
-  id?: number | string;
-};
-
-function FormModal({ table, type, data, id }: Form) {
+function FormModal({
+  table,
+  type,
+  data,
+  id,
+  relatedData,
+}: FormContainerTabs & { relatedData: any }) {
   console.log(data);
   const size = type === "create" ? "w-8 h-8" : "w-7 h-7";
   const bgColor =
@@ -109,7 +113,7 @@ function FormModal({ table, type, data, id }: Form) {
         </button>
       </form>
     ) : type === "create" || type === "update" ? (
-      forms[table](setOpen, type, data)
+      forms[table](setOpen, type, data, relatedData)
     ) : (
       "Form not found"
     );
