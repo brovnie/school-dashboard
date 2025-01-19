@@ -3,14 +3,14 @@ import Image from "next/image";
 import React, { Dispatch, useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import { useFormState } from "react-dom";
-import { deleteSubject } from "@/lib/actions";
+import { deleteClass, deleteSubject } from "@/lib/actions";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import { FormContainerTabs } from "./types";
 
 const deleteActionMap = {
   subject: deleteSubject,
-  class: deleteSubject,
+  class: deleteClass,
   teacher: deleteSubject,
   student: deleteSubject,
   exam: deleteSubject,
@@ -34,6 +34,9 @@ const StudentForm = dynamic(() => import("./forms/StudentForm"), {
 const SubjectForm = dynamic(() => import("./forms/SubjectForm"), {
   loading: () => Loading,
 });
+const ClassForm = dynamic(() => import("./forms/ClassForm"), {
+  loading: () => Loading,
+});
 
 const forms: {
   [key: string]: (
@@ -51,7 +54,7 @@ const forms: {
       relatedData={relatedData}
     />
   ),
-  teacher: (setOpen, type, data) => (
+  /* teacher: (setOpen, type, data) => (
     <TeacherForm
       setOpen={setOpen}
       type={type}
@@ -61,6 +64,14 @@ const forms: {
   ),
   student: (setOpen, type, data) => (
     <StudentForm
+      setOpen={setOpen}
+      type={type}
+      data={data}
+      relatedData={relatedData}
+    />
+  ),*/
+  class: (setOpen, type, data, relatedData) => (
+    <ClassForm
       setOpen={setOpen}
       type={type}
       data={data}
