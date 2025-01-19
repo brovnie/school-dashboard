@@ -38,6 +38,11 @@ export const updateSubject = async (
       },
       data: {
         name: data.name,
+        teachers: {
+          set: data.teachers.map((teacherId) => ({
+            id: teacherId,
+          })),
+        },
       },
     });
     return { success: true, error: false };
