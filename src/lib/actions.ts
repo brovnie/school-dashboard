@@ -94,7 +94,7 @@ export const updateClass = async (
       where: {
         id: data.id!,
       },
-      data: {},
+      data,
     });
     return { success: true, error: false };
   } catch (error) {
