@@ -1,11 +1,14 @@
 import Announcements from "@/components/Announcements";
 import BigCalendar from "@/components/BigCalendar";
+import { BigCalendarContainer } from "@/components/BigCalendarContainer";
 import PerformanceChart from "@/components/PerformanceChart";
+import { getUserId } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
-function SingleTeacherPage() {
+async function SingleTeacherPage() {
+  const userId = await getUserId();
   return (
     <div className="p-4 flex flex-col xl:flex-row gap-4 flex-1">
       <div className="w-full xl:w-2/3">
@@ -118,7 +121,7 @@ function SingleTeacherPage() {
         </div>
         <div className="my-4 bg-white rounded-md h-[800px]">
           <h2>Teacher&apos;s schedule</h2>
-          <BigCalendar />
+          <BigCalendarContainer type="teacherId" id={userId!} />
         </div>
       </div>
       {/*Right */}
