@@ -4,18 +4,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import InputField from "./InputField";
 import { FormTypes } from "./types";
-import {
-  classSchema,
-  ClassSchema,
-  subjectSchema,
-  SubjectSchema,
-} from "@/lib/formValidationSchema";
-import {
-  createClass,
-  createSubject,
-  updateClass,
-  updateSubject,
-} from "@/lib/actions";
+import { classSchema, ClassSchema } from "@/lib/formValidationSchema";
+import { createClass, updateClass } from "@/lib/actions";
 import { useFormState } from "react-dom";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
@@ -97,7 +87,11 @@ const ClassForm = ({
             >
               {teachers.map(
                 (teacher: { id: string; name: string; surname: string }) => (
-                  <option value={teacher.id} key={teacher.id}>
+                  <option
+                    value={teacher.id}
+                    key={teacher.id}
+                    selected={data && teacher.id === data.supervisorId}
+                  >
                     {teacher.name + " " + teacher.surname}
                   </option>
                 )
@@ -119,7 +113,11 @@ const ClassForm = ({
               defaultValue={data?.greadId}
             >
               {grades.map((grade: { id: string; level: number }) => (
-                <option value={grade.id} key={grade.id}>
+                <option
+                  value={grade.id}
+                  key={grade.id}
+                  selected={data && grade.id === data.gradeId}
+                >
                   {grade.level}
                 </option>
               ))}
