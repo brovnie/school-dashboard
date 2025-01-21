@@ -129,7 +129,6 @@ export const createTeacher = async (
   data: TeacherSchema
 ) => {
   try {
-    console.log("tesst");
     const client = await clerkClient();
 
     const user = await client.users.createUser({
@@ -172,11 +171,39 @@ export const updateTeacher = async (
   data: TeacherSchema
 ) => {
   try {
+    if (!data.id) {
+      return { success: false, error: true };
+    }
+    const client = await clerkClient();
+    const user = await client.users.updateUser(data.id, {
+      username: data.username,
+      ...(data.password !== "" && { password: data.password }),
+      firstName: data.name,
+      lastName: data.surname,
+      publicMetadata: { role: "teacher" },
+    });
     await prisma.teacher.update({
       where: {
-        id: data.id!,
+        id: data.id,
       },
-      data,
+      data: {
+        ...(data.password !== "" && { password: data.password }),
+        username: data.username,
+        name: data.name,
+        surname: data.surname,
+        email: data.email || null,
+        phone: data.phone || null,
+        address: data.address,
+        img: data.img || null,
+        bloodType: data.bloodType,
+        sex: data.sex,
+        birthday: data.birthday,
+        subjects: {
+          set: data.subjects?.map((subjectId: string) => ({
+            id: parseInt(subjectId),
+          })),
+        },
+      },
     });
     return { success: true, error: false };
   } catch (error) {

@@ -1,22 +1,59 @@
 import Announcements from "@/components/Announcements";
-import BigCalendar from "@/components/BigCalendar";
 import { BigCalendarContainer } from "@/components/BigCalendarContainer";
+import FormContainter from "@/components/FormContainter";
 import PerformanceChart from "@/components/PerformanceChart";
-import { getUserId } from "@/lib/utils";
+import prisma from "@/lib/prisma";
+import { getRole, getUserId } from "@/lib/utils";
+import { Teacher } from "@prisma/client";
+import { parsePhoneNumber } from "awesome-phonenumber";
 import Image from "next/image";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 import React from "react";
 
-async function SingleTeacherPage() {
+async function SingleTeacherPage({
+  params: { id },
+}: {
+  params: { id: string };
+}) {
+  const role = await getRole();
   const userId = await getUserId();
+  const teacher:
+    | (Teacher & {
+        _count: { subjects: number; classes: number; lessons: number };
+      })
+    | null = await prisma.teacher.findUnique({
+    where: {
+      id,
+    },
+    include: {
+      _count: {
+        select: {
+          subjects: true,
+          classes: true,
+          lessons: true,
+        },
+      },
+    },
+  });
+
+  if (!teacher) {
+    return notFound();
+  }
+  let phone = "-";
+  if (teacher.phone) {
+    const parsedPhone = parsePhoneNumber(teacher.phone, { regionCode: "BE" });
+    phone = parsedPhone.number?.e164 ?? "-";
+  }
+
   return (
-    <div className="p-4 flex flex-col xl:flex-row gap-4 flex-1">
+    <div className="p-4 flex flex-col xl:flex-row gap-4 flex-1 ">
       <div className="w-full xl:w-2/3">
         <div className="flex flex-col lg:flex-row gap-4">
           <div className="bg-sky py-6 px-4 rounded-md flex-1 flex gap-4">
             <div className="w-1/3">
               <Image
-                src="https://images.pexels.com/photos/2182970/pexels-photo-2182970.jpeg?auto=compress&cs=tinysrgb&w=1200"
+                src={teacher.img || "/noAvatar.png"}
                 alt="Teacher picture"
                 width={144}
                 height={144}
@@ -24,7 +61,18 @@ async function SingleTeacherPage() {
               />
             </div>
             <div className="w-2/3 flex flex-col justify-between gap-4">
-              <h1 className="text-xl font-semibold">Leonard Snyder</h1>
+              <div className="flex gap-1">
+                <h1 className="text-xl font-semibold">
+                  {teacher.name + " " + teacher.surname}
+                </h1>
+                {role === "admin" && (
+                  <FormContainter
+                    table="teacher"
+                    type="update"
+                    data={teacher}
+                  />
+                )}
+              </div>
               <p className="text-sm text-gray-500">
                 Lorem ipsum dolor sit amet consectetu adipisicing elit. Eaque,
                 illo.
@@ -37,11 +85,13 @@ async function SingleTeacherPage() {
                     width={14}
                     height={14}
                   />
-                  <span>A+</span>
+                  <span>{teacher.bloodType}</span>
                 </div>
                 <div className="w-full md:w-1/3 lg:w-full 2xl:w-1/3 flex items-center gap-2">
                   <Image src="/date.png" alt="" width={14} height={14} />
-                  <span>January 2025</span>
+                  <span>
+                    {new Intl.DateTimeFormat("nl-BE").format(teacher.birthday)}
+                  </span>
                 </div>
                 <div className="w-full md:w-1/3 lg:w-full 2xl:w-1/3 flex items-center gap-2">
                   <Image
@@ -50,7 +100,7 @@ async function SingleTeacherPage() {
                     width={14}
                     height={14}
                   />
-                  <span>user@email.com</span>
+                  <span>{teacher.email || "-"}</span>
                 </div>
                 <div className="w-full md:w-1/3 lg:w-full 2xl:w-1/3 flex items-center gap-2">
                   <Image
@@ -59,7 +109,7 @@ async function SingleTeacherPage() {
                     width={14}
                     height={14}
                   />
-                  <span>+1 234 567</span>
+                  <span>{phone}</span>
                 </div>
               </div>
             </div>
@@ -87,7 +137,9 @@ async function SingleTeacherPage() {
                 className="w-6 h-6"
               />
               <div>
-                <p className="text-xl font-semibold">2</p>
+                <p className="text-xl font-semibold">
+                  {teacher._count.subjects}
+                </p>
                 <h2 className="text-sm text-gray-500">Branches</h2>
               </div>
             </div>
@@ -100,7 +152,9 @@ async function SingleTeacherPage() {
                 className="w-6 h-6"
               />
               <div>
-                <p className="text-xl font-semibold">6</p>
+                <p className="text-xl font-semibold">
+                  {teacher._count.lessons}
+                </p>
                 <h2 className="text-sm text-gray-500">Lessons</h2>
               </div>
             </div>
@@ -113,13 +167,15 @@ async function SingleTeacherPage() {
                 className="w-6 h-6"
               />
               <div>
-                <p className="text-xl font-semibold">6</p>
+                <p className="text-xl font-semibold">
+                  {teacher._count.classes}
+                </p>
                 <h2 className="text-sm text-gray-500">Classes</h2>
               </div>
             </div>
           </div>
         </div>
-        <div className="my-4 bg-white rounded-md h-[800px]">
+        <div className="px-6 py-5 my-4 bg-white rounded-md ">
           <h2>Teacher&apos;s schedule</h2>
           <BigCalendarContainer type="teacherId" id={userId!} />
         </div>
