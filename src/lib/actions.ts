@@ -216,10 +216,12 @@ export const deleteTeacher = async (
   data: FormData
 ) => {
   const id = data.get("id") as string;
+  const client = await clerkClient();
+  const deleteUserFromClark = await client.users.deleteUser(id);
   try {
     await prisma.teacher.delete({
       where: {
-        id: parseInt(id),
+        id: id,
       },
     });
     return { success: true, error: false };
