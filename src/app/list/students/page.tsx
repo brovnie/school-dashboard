@@ -1,8 +1,7 @@
-import FormModal from "@/components/FormModal";
+import FormContainter from "@/components/FormContainter";
 import Pagination from "@/components/Pagination";
 import Table from "@/components/Table";
 import TableSearch from "@/components/TableSearch";
-import { role, studentsData } from "@/lib/data";
 import prisma from "@/lib/prisma";
 import { ITEM_PER_PAGE } from "@/lib/settings";
 import { getRole } from "@/lib/utils";
@@ -83,7 +82,7 @@ const renderRow = async (item: StudentList) => {
             </button>
           </Link>
           {role === "admin" && (
-            <FormModal table="student" type="delete" id={item.id} />
+            <FormContainter table="student" type="delete" id={item.id} />
           )}
         </div>
       </td>
@@ -154,7 +153,9 @@ async function StudentListPage({
             <button className="w-8 h-8 flex items-center justify-center rounded-full bg-customYellow">
               <Image src="/sort.png" alt="" width={14} height={14} />
             </button>
-            {role === "admin" && <FormModal table="student" type="create" />}
+            {role === "admin" && (
+              <FormContainter table="student" type="create" />
+            )}
           </div>
         </div>
       </div>

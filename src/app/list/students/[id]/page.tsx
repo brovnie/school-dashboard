@@ -10,6 +10,7 @@ import PerformanceChart from "@/components/PerformanceChart";
 import Announcements from "@/components/Announcements";
 import StudentAttendanceChart from "@/components/StudentAttendanceChart";
 import { Suspense } from "react";
+import FormContainter from "@/components/FormContainter";
 
 async function SingleStudentPage({
   params: { id },
@@ -55,9 +56,18 @@ async function SingleStudentPage({
               />
             </div>
             <div className="w-2/3 flex flex-col justify-between gap-4">
-              <h1 className="text-xl font-semibold">
-                {student.name + " " + student.surname}
-              </h1>
+              <div className="flex gap-1">
+                <h1 className="text-xl font-semibold">
+                  {student.name + " " + student.surname}
+                </h1>
+                {role === "admin" && (
+                  <FormContainter
+                    table="student"
+                    type="update"
+                    data={student}
+                  />
+                )}
+              </div>
               <p className="text-sm text-gray-500">
                 Lorem ipsum dolor sit amet consectetu adipisicing elit. Eaque,
                 illo.
@@ -109,7 +119,7 @@ async function SingleStudentPage({
                 className="w-6 h-6"
               />
               <Suspense fallback="loading...">
-                <StudentAttendanceChart />
+                <StudentAttendanceChart id={student.id} />
               </Suspense>
             </div>
             <div className="w-full bg-white p-4 flex gap-4 md:w-[48%] xl:w-[45%] 2xl:w-[48%]">

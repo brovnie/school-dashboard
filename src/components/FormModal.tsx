@@ -3,16 +3,21 @@ import Image from "next/image";
 import React, { Dispatch, useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import { useFormState } from "react-dom";
-import { deleteClass, deleteSubject, deleteTeacher } from "@/lib/actions";
+import {
+  deleteClass,
+  deleteStudent,
+  deleteSubject,
+  deleteTeacher,
+} from "@/lib/actions";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import { FormContainerTabs } from "./types";
 
 const deleteActionMap = {
+  teacher: deleteTeacher,
+  student: deleteStudent,
   subject: deleteSubject,
   class: deleteClass,
-  teacher: deleteTeacher,
-  student: deleteSubject,
   exam: deleteSubject,
   parent: deleteSubject,
   lesson: deleteSubject,
@@ -62,14 +67,14 @@ const forms: {
       relatedData={relatedData}
     />
   ),
-  /* student: (setOpen, type, data) => (
+  student: (setOpen, type, data, relatedData) => (
     <StudentForm
       setOpen={setOpen}
       type={type}
       data={data}
       relatedData={relatedData}
     />
-  ),*/
+  ),
   class: (setOpen, type, data, relatedData) => (
     <ClassForm
       setOpen={setOpen}
@@ -105,7 +110,7 @@ function FormModal({
 
     useEffect(() => {
       if (state.success) {
-        toast(`Item has been deleted`);
+        toast(`${table} has been deleted`);
         setOpen(false);
         router.refresh();
       }
