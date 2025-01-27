@@ -44,7 +44,6 @@ const ClassForm = ({
   }, [state]);
 
   const { teachers, grades } = relatedData;
-  console.log("teacher is", teachers);
   return (
     <form className="flex flex-col gap-8" onSubmit={onSubmit}>
       <h2 className="text-xl font-semibold">
