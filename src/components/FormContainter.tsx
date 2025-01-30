@@ -2,10 +2,12 @@ import React from "react";
 import { FormContainerTabs } from "./types";
 import FormModal from "./FormModal";
 import prisma from "@/lib/prisma";
+import { getRole, getUserId } from "@/lib/utils";
 
 const FormContainter = async ({ table, type, data, id }: FormContainerTabs) => {
   let relatedData = {};
-
+  let role = await getRole();
+  const userId = await getUserId();
   if (type !== "delete") {
     switch (table) {
       case "subject":
@@ -37,6 +39,31 @@ const FormContainter = async ({ table, type, data, id }: FormContainerTabs) => {
           include: { _count: { select: { students: true } } },
         });
         relatedData = { classes: studentClasses, grades: studentGrades };
+        break;
+      case "exam":
+        const examLessons = await prisma.lesson.findMany({
+          where: {
+            ...(role === "teacher" ? { teacherId: userId! } : {}),
+          },
+          select: { id: true, name: true },
+        });
+        relatedData = { lessons: examLessons };
+        break;
+      case "lesson":
+        const lessonsSubject = await prisma.subject.findMany({
+          select: { id: true, name: true },
+        });
+        const lessonClasses = await prisma.class.findMany({
+          select: { id: true, name: true },
+        });
+        const lessonsTeachers = await prisma.teacher.findMany({
+          select: { id: true, name: true, surname: true },
+        });
+        relatedData = {
+          subjects: lessonsSubject,
+          classes: lessonClasses,
+          teachers: lessonsTeachers,
+        };
         break;
       default:
         relatedData = { test: "test" };

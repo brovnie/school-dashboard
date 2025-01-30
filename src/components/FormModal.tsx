@@ -5,6 +5,8 @@ import dynamic from "next/dynamic";
 import { useFormState } from "react-dom";
 import {
   deleteClass,
+  deleteExam,
+  deleteLesson,
   deleteStudent,
   deleteSubject,
   deleteTeacher,
@@ -18,9 +20,9 @@ const deleteActionMap = {
   student: deleteStudent,
   subject: deleteSubject,
   class: deleteClass,
-  exam: deleteSubject,
+  exam: deleteExam,
+  lesson: deleteLesson,
   parent: deleteSubject,
-  lesson: deleteSubject,
   assignment: deleteSubject,
   result: deleteSubject,
   attendance: deleteSubject,
@@ -42,7 +44,12 @@ const SubjectForm = dynamic(() => import("./forms/SubjectForm"), {
 const ClassForm = dynamic(() => import("./forms/ClassForm"), {
   loading: () => Loading,
 });
-
+const ExamForm = dynamic(() => import("./forms/ExamForm"), {
+  loading: () => Loading,
+});
+const LessonForm = dynamic(() => import("./forms/LessonForm"), {
+  loading: () => Loading,
+});
 const forms: {
   [key: string]: (
     setOpen: Dispatch<React.SetStateAction<boolean>>,
@@ -77,6 +84,22 @@ const forms: {
   ),
   class: (setOpen, type, data, relatedData) => (
     <ClassForm
+      setOpen={setOpen}
+      type={type}
+      data={data}
+      relatedData={relatedData}
+    />
+  ),
+  exam: (setOpen, type, data, relatedData) => (
+    <ExamForm
+      setOpen={setOpen}
+      type={type}
+      data={data}
+      relatedData={relatedData}
+    />
+  ),
+  lesson: (setOpen, type, data, relatedData) => (
+    <LessonForm
       setOpen={setOpen}
       type={type}
       data={data}

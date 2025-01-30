@@ -1,4 +1,4 @@
-import FormModal from "@/components/FormModal";
+import FormContainter from "@/components/FormContainter";
 import Pagination from "@/components/Pagination";
 import Table from "@/components/Table";
 import TableSearch from "@/components/TableSearch";
@@ -69,8 +69,8 @@ const renderRow = async (item: ExamList) => {
         <div className="flex items-center gap-2">
           {(role === "admin" || role === "teacher") && (
             <>
-              <FormModal table="exam" type="update" data={item} />
-              <FormModal table="exam" type="delete" id={item.id} />
+              <FormContainter table="exam" type="update" data={item} />
+              <FormContainter table="exam" type="delete" id={item.id} />
             </>
           )}
         </div>
@@ -177,7 +177,7 @@ async function ExamListPage({
               <Image src="/sort.png" alt="" width={14} height={14} />
             </button>
             {(role === "admin" || role === "teacher") && (
-              <FormModal table="exam" type="create" />
+              <FormContainter table="exam" type="create" />
             )}
           </div>
         </div>
