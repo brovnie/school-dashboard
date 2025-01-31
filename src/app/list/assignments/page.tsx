@@ -20,6 +20,10 @@ const fetchColumns = async () => {
   const role = await getRole();
   return [
     {
+      header: "Title",
+      accessor: "title",
+    },
+    {
       header: "Subject Name",
       accessor: "name",
     },
@@ -47,14 +51,15 @@ const fetchColumns = async () => {
       : []),
   ];
 };
-
 const renderRow = async (item: AssigmentList) => {
   const role = await getRole();
+  console.log("item is", item.lesson);
   return (
     <tr
       key={item.id}
       className="border-b border-gray-200 even:bg-slate-50 text-sm hover:bg-purpleLight"
     >
+      <td>{item.title}</td>
       <td className="flex items-center gap-4 p-4">
         {item.lesson.subject.name}
       </td>
