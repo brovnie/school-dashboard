@@ -5,7 +5,7 @@ import TableSearch from "@/components/TableSearch";
 import prisma from "@/lib/prisma";
 import { ITEM_PER_PAGE } from "@/lib/settings";
 import { getRole, getUserId } from "@/lib/utils";
-import { Prisma, Result } from "@prisma/client";
+import { Prisma } from "@prisma/client";
 import Image from "next/image";
 import React from "react";
 
@@ -19,8 +19,6 @@ type ResultList = {
   score: number;
   className: string;
   startTime: Date;
-  examId?: number;
-  assignmentId?: number;
 };
 
 const fetchColumns = async () => {
