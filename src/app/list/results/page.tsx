@@ -1,8 +1,7 @@
-import FormModal from "@/components/FormModal";
+import FormContainter from "@/components/FormContainter";
 import Pagination from "@/components/Pagination";
 import Table from "@/components/Table";
 import TableSearch from "@/components/TableSearch";
-import { role } from "@/lib/data";
 import prisma from "@/lib/prisma";
 import { ITEM_PER_PAGE } from "@/lib/settings";
 import { getRole, getUserId } from "@/lib/utils";
@@ -20,6 +19,8 @@ type ResultList = {
   score: number;
   className: string;
   startTime: Date;
+  examId?: number;
+  assignmentId?: number;
 };
 
 const fetchColumns = async () => {
@@ -85,8 +86,8 @@ const renderRow = async (item: ResultList) => {
         <div className="flex items-center gap-2">
           {(role === "admin" || role === "teacher") && (
             <>
-              <FormModal table="result" type="update" data={item} />
-              <FormModal table="result" type="delete" id={item.id} />
+              <FormContainter table="result" type="update" data={item} />
+              <FormContainter table="result" type="delete" id={item.id} />
             </>
           )}
         </div>
@@ -214,7 +215,7 @@ async function ResultListPage({
               <Image src="/sort.png" alt="" width={14} height={14} />
             </button>
             {(role === "admin" || role === "teacher") && (
-              <FormModal table="result" type="create" />
+              <FormContainter table="result" type="create" />
             )}
           </div>
         </div>
