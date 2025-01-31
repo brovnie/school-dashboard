@@ -4,6 +4,7 @@ import React, { Dispatch, useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import { useFormState } from "react-dom";
 import {
+  deleteAssignment,
   deleteClass,
   deleteExam,
   deleteLesson,
@@ -22,8 +23,8 @@ const deleteActionMap = {
   class: deleteClass,
   exam: deleteExam,
   lesson: deleteLesson,
+  assignment: deleteAssignment,
   parent: deleteSubject,
-  assignment: deleteSubject,
   result: deleteSubject,
   attendance: deleteSubject,
   event: deleteSubject,
@@ -48,6 +49,9 @@ const ExamForm = dynamic(() => import("./forms/ExamForm"), {
   loading: () => Loading,
 });
 const LessonForm = dynamic(() => import("./forms/LessonForm"), {
+  loading: () => Loading,
+});
+const AssignmentForm = dynamic(() => import("./forms/AssignmentForm"), {
   loading: () => Loading,
 });
 const forms: {
@@ -100,6 +104,14 @@ const forms: {
   ),
   lesson: (setOpen, type, data, relatedData) => (
     <LessonForm
+      setOpen={setOpen}
+      type={type}
+      data={data}
+      relatedData={relatedData}
+    />
+  ),
+  assignment: (setOpen, type, data, relatedData) => (
+    <AssignmentForm
       setOpen={setOpen}
       type={type}
       data={data}

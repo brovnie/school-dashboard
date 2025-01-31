@@ -41,6 +41,7 @@ const FormContainter = async ({ table, type, data, id }: FormContainerTabs) => {
         relatedData = { classes: studentClasses, grades: studentGrades };
         break;
       case "exam":
+      case "assignment":
         const examLessons = await prisma.lesson.findMany({
           where: {
             ...(role === "teacher" ? { teacherId: userId! } : {}),
