@@ -4,6 +4,7 @@
 
 - NextJS
 - Clerk
+- pirsma
 - zod
 - postSQL
 

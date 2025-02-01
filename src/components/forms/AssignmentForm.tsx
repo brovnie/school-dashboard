@@ -4,18 +4,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import InputField from "./InputField";
 import { FormTypes } from "./types";
-import {
-  assignmentSchema,
-  AssignmentSchema,
-  examSchema,
-  ExamSchema,
-} from "@/lib/formValidationSchema";
-import {
-  createAssignment,
-  createExam,
-  updateAssignment,
-  updateExam,
-} from "@/lib/actions";
+import { assignmentSchema, AssignmentSchema } from "@/lib/formValidationSchema";
+import { createAssignment, updateAssignment } from "@/lib/actions";
 import { useFormState } from "react-dom";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
