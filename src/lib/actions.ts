@@ -1,6 +1,7 @@
 "use server";
 
 import {
+  AnnouncementSchema,
   AssignmentSchema,
   ClassSchema,
   ExamSchema,
@@ -643,6 +644,56 @@ export const deleteResult = async (
   console.log("test");
   try {
     await prisma.result.delete({
+      where: {
+        id: parseInt(id),
+      },
+    });
+    return { success: true, error: false };
+  } catch (error) {
+    console.log(error);
+    return { success: false, error: true };
+  }
+};
+export const createAnnouncement = async (
+  currentState: CurrentState,
+  data: AnnouncementSchema
+) => {
+  try {
+    await prisma.announcement.create({
+      data,
+    });
+
+    return { success: true, error: false };
+  } catch (err) {
+    console.log(err);
+    return { success: false, error: true };
+  }
+};
+
+export const updateAnnouncement = async (
+  currentState: CurrentState,
+  data: AnnouncementSchema
+) => {
+  try {
+    await prisma.announcement.update({
+      where: {
+        id: data.id!,
+      },
+      data,
+    });
+    return { success: true, error: false };
+  } catch (error) {
+    console.log(error);
+    return { success: false, error: true };
+  }
+};
+export const deleteAnnouncement = async (
+  currentState: CurrentState,
+  data: FormData
+) => {
+  const id = data.get("id") as string;
+  try {
+    await prisma.announcement.delete({
       where: {
         id: parseInt(id),
       },

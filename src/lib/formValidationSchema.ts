@@ -117,3 +117,12 @@ export const resultSchema = z.object({
   studentId: z.coerce.string({ message: "Student is required" }),
 });
 export type ResultSchema = z.infer<typeof resultSchema>;
+
+export const announcementSchema = z.object({
+  id: z.coerce.number().optional(),
+  title: z.coerce.string({ message: "Title is required" }),
+  description: z.coerce.string({ message: "Description is required" }),
+  date: z.coerce.date({ message: "Date is required" }),
+  classId: z.coerce.number().optional(),
+});
+export type AnnouncementSchema = z.infer<typeof announcementSchema>;

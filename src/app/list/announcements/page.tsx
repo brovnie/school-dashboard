@@ -1,3 +1,4 @@
+import FormContainter from "@/components/FormContainter";
 import FormModal from "@/components/FormModal";
 import Pagination from "@/components/Pagination";
 import Table from "@/components/Table";
@@ -40,13 +41,14 @@ const fetchColumns = async () => {
 
 const renderRow = async (item: AnnounecementList) => {
   const role = await getRole();
+  console.log(item);
   return (
     <tr
       key={item.id}
       className="border-b border-gray-200 even:bg-slate-50 text-sm hover:bg-purpleLight"
     >
       <td className="flex items-center gap-4 p-4">{item.title}</td>
-      <td>{item.class.name}</td>
+      <td>{item.class?.name || "-"}</td>
       <td className="hidden md:table-cell">
         {new Intl.DateTimeFormat("en-US").format(item.date)}
       </td>
@@ -54,8 +56,8 @@ const renderRow = async (item: AnnounecementList) => {
         <div className="flex items-center gap-2">
           {role === "admin" && (
             <>
-              <FormModal table="announcement" type="update" data={item} />
-              <FormModal table="announcement" type="delete" id={item.id} />
+              <FormContainter table="announcement" type="update" data={item} />
+              <FormContainter table="announcement" type="delete" id={item.id} />
             </>
           )}
         </div>
@@ -135,7 +137,7 @@ async function AnnouncementListPage({
               <Image src="/sort.png" alt="" width={14} height={14} />
             </button>
             {role === "admin" && (
-              <FormModal table="announcement" type="create" />
+              <FormContainter table="announcement" type="create" />
             )}
           </div>
         </div>
