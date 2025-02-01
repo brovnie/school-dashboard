@@ -126,3 +126,12 @@ export const announcementSchema = z.object({
   classId: z.coerce.number().optional(),
 });
 export type AnnouncementSchema = z.infer<typeof announcementSchema>;
+
+export const eventSchema = z.object({
+  id: z.coerce.number().optional(),
+  title: z.string().min(1, { message: "Title is required!" }),
+  startDate: z.coerce.date({ message: "Start time is required" }),
+  dueDate: z.coerce.date({ message: "End time is required" }),
+  lessonId: z.coerce.number({ message: "Lesson is required" }),
+});
+export type EventSchema = z.infer<typeof eventSchema>;
