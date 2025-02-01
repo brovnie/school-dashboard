@@ -69,22 +69,15 @@ const AnnouncementForm = ({
             register={register}
             error={errors.title}
           />
-          <div className={"flex flex-col gap-2 w-1/4"}>
-            <label htmlFor="description" className="text-xs text-gray-500">
-              Description
-            </label>
-            <textarea
-              id="description"
-              name="description"
-              defaultValue={data?.description}
-              className="ring-[1.5px] ring-gray-300 p-2 rounded-md text-sm w-full"
-            ></textarea>
-            {errors.description && (
-              <p className="text-xs text-red-400">
-                {errors.description.toString()}
-              </p>
-            )}
-          </div>
+          <InputField
+            label="Short description"
+            name="description"
+            defaultValue={data?.description}
+            register={register}
+            error={errors.description}
+            fullWidth
+          />
+
           <InputField
             label="Date"
             name="date"
