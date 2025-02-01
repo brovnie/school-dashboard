@@ -1,3 +1,4 @@
+import FormContainter from "@/components/FormContainter";
 import FormModal from "@/components/FormModal";
 import Pagination from "@/components/Pagination";
 import Table from "@/components/Table";
@@ -78,8 +79,8 @@ const renderRow = async (item: EventList) => {
         <div className="flex items-center gap-2">
           {role === "admin" && (
             <>
-              <FormModal table="event" type="update" data={item} />
-              <FormModal table="subject" type="delete" id={item.id} />
+              <FormContainter table="event" type="update" data={item} />
+              <FormContainter table="event" type="delete" id={item.id} />
             </>
           )}
         </div>
@@ -158,7 +159,7 @@ async function EventListPage({
             <button className="w-8 h-8 flex items-center justify-center rounded-full bg-customYellow">
               <Image src="/sort.png" alt="" width={14} height={14} />
             </button>
-            {role === "admin" && <FormModal table="subject" type="create" />}
+            {role === "admin" && <FormContainter table="event" type="create" />}
           </div>
         </div>
       </div>

@@ -745,7 +745,7 @@ export const deleteEvent = async (
 ) => {
   const id = data.get("id") as string;
   try {
-    await prisma.announcement.delete({
+    await prisma.event.delete({
       where: {
         id: parseInt(id),
       },

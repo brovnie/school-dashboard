@@ -83,10 +83,11 @@ const FormContainter = async ({ table, type, data, id }: FormContainerTabs) => {
         };
         break;
       case "announcement":
-        const announcementClass = await prisma.class.findMany({
+      case "event":
+        const itemsClass = await prisma.class.findMany({
           select: { id: true, name: true },
         });
-        relatedData = { classes: announcementClass };
+        relatedData = { classes: itemsClass };
         break;
       default:
         relatedData = { test: "test" };

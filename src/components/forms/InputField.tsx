@@ -1,5 +1,5 @@
 import React from "react";
-import { FieldError, FieldValues, UseFormRegister } from "react-hook-form";
+import { FieldError } from "react-hook-form";
 
 type InputFieldType = {
   label: string;
@@ -10,6 +10,7 @@ type InputFieldType = {
   error?: FieldError;
   hidden?: boolean;
   inputProps?: React.InputHTMLAttributes<HTMLInputElement>;
+  fullWidth?: boolean;
 };
 
 const InputField = ({
@@ -21,9 +22,16 @@ const InputField = ({
   error,
   hidden,
   inputProps,
+  fullWidth,
 }: InputFieldType) => {
   return (
-    <div className={hidden ? "hidden" : "flex flex-col gap-2 w-1/4"}>
+    <div
+      className={
+        hidden
+          ? "hidden"
+          : `flex flex-col gap-2 ${fullWidth ? "w-4/6" : "w-1/4"}`
+      }
+    >
       <label htmlFor={name} className="text-xs text-gray-500">
         {label}
       </label>
