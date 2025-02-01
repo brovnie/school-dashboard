@@ -17,6 +17,7 @@ import {
 import { useFormState } from "react-dom";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
+import TextareaField from "../TextAreaField";
 
 const AnnouncementForm = ({
   setOpen,
@@ -69,15 +70,14 @@ const AnnouncementForm = ({
             register={register}
             error={errors.title}
           />
-          <InputField
-            label="Short description"
+          <TextareaField
+            label="Description"
             name="description"
             defaultValue={data?.description}
             register={register}
             error={errors.description}
             fullWidth
           />
-
           <InputField
             label="Date"
             name="date"

@@ -10,6 +10,7 @@ import { useFormState } from "react-dom";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import { formatDate } from "./LessonForm";
+import TextareaField from "../TextAreaField";
 
 const EventForm = ({
   setOpen,
@@ -72,8 +73,8 @@ const EventForm = ({
             register={register}
             error={errors.title}
           />
-          <InputField
-            label="Short Description"
+          <TextareaField
+            label="Description"
             name="description"
             defaultValue={data?.description}
             register={register}
