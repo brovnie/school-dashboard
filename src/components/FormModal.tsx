@@ -6,6 +6,7 @@ import { useFormState } from "react-dom";
 import {
   deleteAnnouncement,
   deleteAssignment,
+  deleteAttendance,
   deleteClass,
   deleteEvent,
   deleteExam,
@@ -30,8 +31,8 @@ const deleteActionMap = {
   result: deleteResult,
   announcement: deleteAnnouncement,
   event: deleteEvent,
+  attendance: deleteAttendance,
   parent: deleteSubject,
-  attendance: deleteSubject,
 };
 
 const Loading = <p>Loading</p>;
@@ -66,6 +67,10 @@ const AnnouncementForm = dynamic(() => import("./forms/AnnouncementForm"), {
 const EventForm = dynamic(() => import("./forms/EventForm"), {
   loading: () => Loading,
 });
+const AttendanceForm = dynamic(() => import("./forms/AttendanceForm"), {
+  loading: () => Loading,
+});
+
 const forms: {
   [key: string]: (
     setOpen: Dispatch<React.SetStateAction<boolean>>,
@@ -148,6 +153,14 @@ const forms: {
   ),
   event: (setOpen, type, data, relatedData) => (
     <EventForm
+      setOpen={setOpen}
+      type={type}
+      data={data}
+      relatedData={relatedData}
+    />
+  ),
+  attendance: (setOpen, type, data, relatedData) => (
+    <AttendanceForm
       setOpen={setOpen}
       type={type}
       data={data}

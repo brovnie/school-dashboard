@@ -3,6 +3,7 @@
 import {
   AnnouncementSchema,
   AssignmentSchema,
+  AttendanceSchema,
   ClassSchema,
   EventSchema,
   ExamSchema,
@@ -746,6 +747,57 @@ export const deleteEvent = async (
   const id = data.get("id") as string;
   try {
     await prisma.event.delete({
+      where: {
+        id: parseInt(id),
+      },
+    });
+    return { success: true, error: false };
+  } catch (error) {
+    console.log(error);
+    return { success: false, error: true };
+  }
+};
+
+export const createAttendance = async (
+  currentState: CurrentState,
+  data: AttendanceSchema
+) => {
+  try {
+    await prisma.attendance.create({
+      data,
+    });
+
+    return { success: true, error: false };
+  } catch (err) {
+    console.log(err);
+    return { success: false, error: true };
+  }
+};
+
+export const updateAttendance = async (
+  currentState: CurrentState,
+  data: AttendanceSchema
+) => {
+  try {
+    await prisma.attendance.update({
+      where: {
+        id: data.id!,
+      },
+      data,
+    });
+    return { success: true, error: false };
+  } catch (error) {
+    console.log(error);
+    return { success: false, error: true };
+  }
+};
+export const deleteAttendance = async (
+  currentState: CurrentState,
+  data: FormData
+) => {
+  const id = data.get("id") as string;
+  try {
+    await prisma.attendance.delete({
       where: {
         id: parseInt(id),
       },
