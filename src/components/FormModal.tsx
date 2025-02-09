@@ -11,6 +11,7 @@ import {
   deleteEvent,
   deleteExam,
   deleteLesson,
+  deleteParent,
   deleteResult,
   deleteStudent,
   deleteSubject,
@@ -32,7 +33,7 @@ const deleteActionMap = {
   announcement: deleteAnnouncement,
   event: deleteEvent,
   attendance: deleteAttendance,
-  parent: deleteSubject,
+  parent: deleteParent,
 };
 
 const Loading = <p>Loading</p>;
@@ -68,6 +69,9 @@ const EventForm = dynamic(() => import("./forms/EventForm"), {
   loading: () => Loading,
 });
 const AttendanceForm = dynamic(() => import("./forms/AttendanceForm"), {
+  loading: () => Loading,
+});
+const ParentForm = dynamic(() => import("./forms/ParentForm"), {
   loading: () => Loading,
 });
 
@@ -166,6 +170,9 @@ const forms: {
       data={data}
       relatedData={relatedData}
     />
+  ),
+  parent: (setOpen, type, data) => (
+    <ParentForm setOpen={setOpen} type={type} data={data} />
   ),
 };
 

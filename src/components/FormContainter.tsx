@@ -101,8 +101,10 @@ const FormContainter = async ({ table, type, data, id }: FormContainerTabs) => {
           lessons: attendanceLessons,
         };
         break;
+      case "parent":
+        break;
       default:
-        relatedData = { test: "test" };
+        relatedData = {};
         break;
     }
   }
