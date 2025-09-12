@@ -26,6 +26,14 @@ const HomePage = () => {
             School Management Board
           </h1>
           <p className="text-gray-400">Sign in to your account</p>
+          <div className="text-xs">
+            <p>Users example:</p>
+            <ul>
+              <li>Admin : username: admin, password: admin</li>
+              <li>Parent : username: parent, password: parent</li>
+              <li>Student : username: student, password: student</li>
+            </ul>
+          </div>
           <Clark.GlobalError className="text-sm text-red-400" />
           <Clark.Field name="identifier" className="flex flex-col gap-2">
             <Clark.Label className="text-xs text-gray-500">
